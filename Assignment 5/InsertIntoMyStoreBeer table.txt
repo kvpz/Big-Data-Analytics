@@ -1,0 +1,87 @@
+INSERT INTO MYSTOREBEER 
+SELECT 
+      w.Visit_Nbr,
+      w.Store_Nbr, 
+      w.Register_Nbr, 
+      w.Card_Holder_Nbr, 
+      w.Membership_Nbr, 
+      w.Member_Code, 
+      w.Tender_Type, 
+      w.Tender_Amt, 
+      w.Sales_Tax_Amt, 
+      w.Total_Visit_Amt, 
+      w.Transaction_Date,
+      w.Transaction_Time,
+      
+case
+	when transaction_date IN (01000102,01000109,01000116,01000123,01000130) then 1
+	when transaction_date IN (01000103,01000110,01000117,01000124,01000131) then 2
+	when transaction_date IN (01000104,01000111,01000118,01000125) then 3
+	when transaction_date IN (01000105,01000112,01000119,01000126) then 4
+	when transaction_date IN (01000106,01000113,01000120,01000127) then 5
+	when transaction_date IN (01000107,01000114,01000121,01000128) then 6
+	when transaction_date IN (01000108,01000115,01000122,01000129) then 7
+	else 0
+end,
+case 
+      WHEN  transaction_date IN (01000102,01000109,01000116,01000123,01000130) THEN 1
+      else 0 
+END,
+case 
+      WHEN transaction_date IN (01000103,01000110,01000117,01000124,01000131) THEN 1
+      else 0 
+END,
+case 
+      WHEN  transaction_date IN (01000104,01000111,01000118,01000125)  THEN 1
+      else 0 
+END,
+case 
+      WHEN transaction_date IN (01000105,01000112,01000119,01000126)  THEN 1
+      else 0 
+END,
+case 
+      WHEN transaction_date IN (01000106,01000113,01000120,01000127) THEN 1
+      else 0 
+END,
+case 
+      WHEN transaction_date IN (01000107,01000114,01000121,01000128) THEN 1
+      else 0 
+END,
+case 
+      WHEN transaction_date IN (01000108,01000115,01000122,01000129) THEN 1
+      else 0 
+END,
+CASE
+      WHEN category_nbr = 19 THEN 1
+      ELSE 0 
+END,
+      w.Refund_Code,
+      w.Tot_Unit_Cost, 
+      w.Tot_Unique_Itm_Cnt, 
+      w.Tot_Scan_Cnt,
+      
+      w.MEM_ZIP, 
+      w.MEMBER_TYPE,
+      w.MEMBER_STATUS_CD, 
+      w.ISSUING_CLUB_NBR, 
+      w.RENEWAL_DATE, 
+      w.JOIN_DATE,
+      w.Store_Name,
+      w.STO_ZIP,
+      w.Item_Quantity,
+      w.Total_Scan_Amount, 
+      w.Unit_Cost_Amount, 
+      w.Unit_Retail_Amount, 
+      w.Tax_Collect_Code,
+      w.Item_Nbr,
+      w.Category_Nbr,
+      w.Sub_Category_Nbr,
+      w.Primary_Desc, 
+      w.Secondary_Desc, 
+      w.Create_Date, 
+      w.Effective_Date, 
+      w.Sub_category_desc
+FROM
+mystore w; 
+
+update mystorebeer set visit_contains_beer = 1 WHERE visit_nbr IN (select visit_nbr from mystorebeer where category_nbr = 19);
